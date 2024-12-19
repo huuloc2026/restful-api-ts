@@ -5,11 +5,13 @@
    "type": "module",
    "scripts": {
       "start": "ts-node src/index.ts",
-      "typeorm": "typeorm-ts-node-commonjs",
       "start:docker": "docker compose up -d",
       "dev": "npx tsx watch src/app.ts",
-      "migration:show": "yarn run typeorm",
-      "migration:generate": "yarn run typeorm migration:generate -- -d src/database/ormconfig.ts"
+      
+      "typeorm": "npx typeorm-ts-node-commonjs --dataSource src/database/ormconfig.ts",
+      "typeorm:migrate": "yarn typeorm migration:run",
+      "typeorm:generate": "yarn typeorm migration:generate src/database/migrations/Migration --timestamp",
+      "typeorm:revert": "yarn typeorm migration:revert"
    },
    "keywords": [],
    "author": "",
@@ -40,8 +42,5 @@
       "pg": "^8.4.0"
    },
    "devDependencies": {
-      "ts-node": "10.9.1",
-      "@types/node": "^16.11.10",
-      "typescript": "4.5.2"
    }
 }
