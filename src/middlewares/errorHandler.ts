@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 
 function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
-    console.error(err); 
+    if (res.headersSent) {
+        return next(err); // Tránh gửi phản hồi nhiều lần
+    }
     res.status(500).json({
-        message: 'Something went wrong!',
-        error: err.message || err,
+        message: err.message,
+        stack: err.stack
     });
 }
 

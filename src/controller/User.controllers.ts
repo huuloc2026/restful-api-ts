@@ -7,17 +7,20 @@ const userService = new UserService();
 class UserController {
     // Tạo mới người dùng
     static createUser: RequestHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const { userName, fullName, email, phoneNumber } = req.body;
+        const { userName, fullName, password, uass , email, phoneNumber } = req.body;
+
+        // console.log({ userName, fullName, password, uass, email, phoneNumber })
         try {
-            const newUser = await userService.createUser(userName, fullName, email, phoneNumber);
+            const newUser = await userService.createUser(userName, password,uass , fullName, email, phoneNumber);
             responseHandler.success(res, 201, newUser, 'User created successfully');
         } catch (error) {
             responseHandler.error(res, 500, error, 'Failed to create user');
             next(error);
         }
-    };
-    // Lấy tất cả người dùng
+    }; // Lấy tất cả người dùng
     static getUsers: RequestHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const {accessToken} = req
+        console.log("accessToken::getUsers>>>>",accessToken);
         try {
             const users = await userService.getUsers();
             responseHandler.success(res, 200, users, 'Fetched all users');

@@ -5,14 +5,20 @@ import responseHandler from 'utils/ResponseHandler';
 
 export const validateMiddleware = (dtoClass: any) => {
     return async (req: Request, res: Response, next: NextFunction) => {
-        const dtoInstance = plainToInstance(dtoClass, req.body); // Chuyển đổi dữ liệu thành instance của DTO
-        const errors = await validate(dtoInstance); // Xác thực dữ liệu
-        if (errors.length > 0) {
+        const dtoInstance = plainToInstance(dtoClass, req.body, { excludeExtraneousValues: true }); 
+        const errors = await validate(dtoInstance);
+        if (errors.length > 0 && errors) {
+           
             const messages = errors
-                .map(err => Object.values(err.constraints || {})) // Lấy các lỗi từ các constraints
-                .flat(); // Kết hợp tất cả thông báo lỗi thành một mảng
-            
+                .map(err => {
+             
+                    return Object.values(err.constraints || {}).join(', ');
+                })
+                .flat(); 
+  
+             responseHandler.error(res, 400, messages[0], 'Validation failed');
         }
-        next(); 
+
+        next(); // Nếu không có lỗi, tiếp tục gọi controller
     };
 };

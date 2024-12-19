@@ -12,7 +12,7 @@ const responseHandler = {
         return res.status(statusCode).json({
             message,
             data,
-            error: null, // Không có lỗi khi thành công
+            error: null, 
         });
     },
 
@@ -21,7 +21,7 @@ const responseHandler = {
         let errorMessage = 'An unexpected error occurred';
 
         if (error instanceof Error) {
-            errorMessage = error.message; // Lấy thông điệp từ Error object
+            errorMessage = error.message; 
         } else if (typeof error === 'string') {
             errorMessage = error; // Nếu error là chuỗi
         } else if (typeof error === 'object' && error !== null && 'message' in error) {

@@ -2,10 +2,11 @@
 import { User } from 'entities/User.entity';
 import AppDataSource from 'database/ormconfig';
 import { randomUUID } from 'crypto';
+import { hashPassword } from 'utils/PasswordUtil';
 export class UserService {
     private userRepository = AppDataSource.getRepository(User);
     // Tạo mới User
-    async createUser(userName: string, fullName: string, email?: string, phoneNumber?: string): Promise<User>  {
+    async createUser(userName: string, password: string,uass:string,fullName: string, email: string, phoneNumber: string): Promise<User>  {
         const existingUser = await this.userRepository.findOne({
             where: { userName: userName }
         });
@@ -13,14 +14,14 @@ export class UserService {
             throw new Error('Username already exists');
         }
         const uuid: string = randomUUID();
-        const newUser = new User(userName, uuid, fullName, email, phoneNumber); 
+        const hashedPassword = await hashPassword(password)
+        const newUser = new User(userName, hashedPassword,uass,uuid, fullName, email, phoneNumber); 
         await this.userRepository.save(newUser);
         return newUser;
     }
-    // Lấy tất cả User
+    // // Lấy tất cả User
     async getUsers() {
         const users = await this.userRepository.find();
-        console.log('All Users:', users);
         return users;
     }
 
