@@ -1,5 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { AuthService } from "services/Auth.services";
+import { ShopService } from "services/Shop.services";
 import { UserService } from "services/User.services";
 import {
   generateAccessToken,
@@ -12,7 +13,21 @@ import { sendRefreshToken } from "utils/sendRefreshToken";
 
 const authService = new AuthService();
 
+
+const shopService = new ShopService
 class AuthController {
+  static SignUp: RequestHandler = async (req: Request,
+    res: Response,
+    next: NextFunction,) => {
+    try {
+      const { email, password, phoneNumber } = req.body
+      const newSignUp = await shopService.SignUpShop(email, password, phoneNumber)
+      responseHandler.success(res, 201, newSignUp, "Register successfully");
+    } catch (error) {
+      responseHandler.error(res, 500, error, "Failed sign up");
+      next(error);
+    }
+  }
   static Login: RequestHandler = async (
     req: Request,
     res: Response,

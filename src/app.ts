@@ -18,8 +18,8 @@ app.use('/v1',router)
 
 app.use(
     cors({
-        origin: 'http://localhost:3000',  // Đảm bảo origin của frontend nếu có
-        credentials: true,  // Cho phép gửi và nhận cookies
+        origin: 'http://localhost:3000', 
+        credentials: true, 
     })
 );
 

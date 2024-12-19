@@ -1,10 +1,10 @@
 import express from 'express';
 import UserController from 'controller/User.controllers';
 import { validateMiddleware } from 'middlewares/validateMiddleware';
-import { CreateUserDTO } from 'entities/UserDTO/CreateUserDTO';
-import { GetUserbyIdDTO } from 'entities/UserDTO/GetUseridDTO';
-import { DeleteUserDTO } from 'entities/UserDTO/DeleteUseridDTO';
-import { UpdateUserDTO } from 'entities/UserDTO/UpdateUserDTO';
+import { CreateUserDTO } from 'utils/DTO/UserDTO/CreateUserDTO';
+import { GetUserbyIdDTO } from 'utils/DTO/UserDTO/GetUseridDTO';
+import { DeleteUserDTO } from 'utils/DTO/UserDTO/DeleteUseridDTO';
+import { UpdateUserDTO } from 'utils/DTO/UserDTO/UpdateUserDTO';
 import { authenticateAccessToken } from 'middlewares/authenticateAccessToken';
 
 const UserRouter = express.Router();

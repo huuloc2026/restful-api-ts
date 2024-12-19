@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
-import bcrypt from 'bcrypt';
+
 @Entity('User')
 export class User {
     @PrimaryGeneratedColumn() // Automatically generates a primary key (userId)
