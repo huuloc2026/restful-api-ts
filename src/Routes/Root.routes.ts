@@ -1,7 +1,7 @@
 import express from "express"
-import UserRouter from "./User.routes"
-import UserAdvanceRouter from "./UserAdvance.routes"
-import AuthRouter from "./Auth.routes"
+import UserRouter from "../modules/Users/user.routes"
+import UserAdvanceRouter from "../modules/UserAdvance/userAdvance.routes"
+import AuthRouter from "../modules/auth/auth.routes"
 const router = express()
 
 router.use('/user', UserRouter)
