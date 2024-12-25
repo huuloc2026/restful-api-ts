@@ -1,10 +1,10 @@
 services:
   db:
     image: mysql:8.0 
-    container_name: mysql-typeorm
+    container_name: book-manager
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword 
-      MYSQL_DATABASE: typeorm_demo 
+      MYSQL_DATABASE: book_manager 
       MYSQL_USER: huuloc2026 
       MYSQL_PASSWORD: 123456 
     ports:

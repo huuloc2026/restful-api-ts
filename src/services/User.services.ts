@@ -1,6 +1,6 @@
 
 import { User } from 'entities/User.entity';
-import AppDataSource from 'database/datasource.config.ts';
+import { AppDataSource } from 'data-source';
 import { randomUUID } from 'crypto';
 import { hashPassword } from 'utils/PasswordUtil';
 export class UserService {

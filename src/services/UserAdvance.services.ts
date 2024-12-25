@@ -1,5 +1,5 @@
 import { UserAdvance } from 'entities/UserAdvance.entity';
-import AppDataSource from 'database/datasource.config.ts';
+import { AppDataSource } from 'data-source';
 
 export class UserAdvanceService {
     private userAdvanceRepository = AppDataSource.getRepository(UserAdvance);

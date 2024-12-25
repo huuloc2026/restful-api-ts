@@ -1,4 +1,4 @@
-import AppDataSource from "database/datasource.config.ts";
+import { AppDataSource } from 'data-source';
 import { Shop } from "entities/Shop.entity";
 import { hashPassword } from "utils/PasswordUtil";
 

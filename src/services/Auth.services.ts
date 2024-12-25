@@ -1,5 +1,5 @@
+import { AppDataSource } from 'data-source';
 import { User } from 'entities/User.entity';
-import AppDataSource from 'database/datasource.config.ts';
 import { verifyPassword } from 'utils/PasswordUtil';
 import { generateAccessToken, generateRefreshToken } from 'utils/jwtUtil';
 export class AuthService {
