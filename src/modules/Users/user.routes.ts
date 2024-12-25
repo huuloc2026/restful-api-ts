@@ -1,7 +1,7 @@
 import express from 'express';
 import UserController from 'modules/Users/user.controllers';
 import { validateMiddleware } from 'middlewares/validateMiddleware';
-import { CreateUserDTO } from 'modules/Users/user.dto';
+import { CreateUserDTO, GetUserbyIdDTO } from 'modules/Users/user.dto';
 import { authenticateAccessToken } from 'middlewares/authenticateAccessToken';
 
 const UserRouter = express.Router();

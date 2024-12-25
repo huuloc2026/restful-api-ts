@@ -4,22 +4,25 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./dist/app.js",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "start:docker": "docker compose up -d",
-    "dev": "npx tsx watch src/app.ts"
+    "dev": "npx tsx watch src/app.ts",
+    "typeorm": "typeorm-ts-node-esm",
+    "migration:generate": "npm run typeorm migration:generate -n CreateUserTable",
+    "migration:run": "npm run typeorm migration:run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@bull-board/express": "^6.5.3",
+    "@bull-board/ui": "^6.5.3",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.2",
+    "@types/nodemailer": "^6.4.17",
     "bcrypt": "^5.1.1",
     "bullmq": "^5.34.4",
     "class-transformer": "^0.5.1",
@@ -28,8 +31,10 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "ioredis": "^5.4.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.5",
+    "nodemailer": "^6.9.16",
     "redis": "^4.7.0",
     "reflect-metadata": "^0.2.2",
     "ts-node": "^10.9.2",
@@ -37,7 +42,5 @@
     "typeorm": "^0.3.20",
     "typescript": "^5.7.2"
   },
-  "devDependencies": {
-    "tsconfig-paths": "^4.2.0"
-  }
+  "devDependencies": {}
 }

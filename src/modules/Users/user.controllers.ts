@@ -1,4 +1,7 @@
+import { randomUUID } from 'crypto';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { emailWorker } from 'modules/BullMQ/emai.process';
+import { emailSending } from 'modules/BullMQ/queue';
 import { UserService } from 'modules/Users/user.services';
 import responseHandler from 'utils/ResponseHandler';
 
@@ -8,10 +11,13 @@ class UserController {
     // Tạo mới người dùng
     static createUser: RequestHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const { userName, fullName, password, uass , email, phoneNumber } = req.body;
-
+        
         // console.log({ userName, fullName, password, uass, email, phoneNumber })
         try {
+            
             const newUser = await userService.createUser(userName, password,uass , fullName, email, phoneNumber);
+            await emailSending(email);
+            await emailWorker;
             responseHandler.success(res, 201, newUser, 'User created successfully');
         } catch (error) {
             responseHandler.error(res, 500, error, 'Failed to create user');

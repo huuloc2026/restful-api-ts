@@ -1,0 +1,65 @@
+@base_url = http://localhost:5000
+
+### Get data
+GET {{base_url}}/v1/user/getAllUsers
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwLCJpYXQiOjE3MzUxMTA2NjYsImV4cCI6MTczNTExMDcyNn0.6VJEcf8SlQRMSEUUTlRNdVwe8vU0E81nRWe4Ae6o0-8
+
+###
+
+### Create new user
+POST {{base_url}}/v1/user/createrNewUser
+Content-Type: application/json
+
+{
+  "userName": "123123",
+  "email": "Huuloc2026@gmail.com",
+  "fullName": "123456",
+  "password": "123456",
+  "uass": "12k3123hjk",
+  "phoneNumber": "0919779850"
+}
+
+### Login
+POST {{base_url}}/v1/auth/login
+Content-Type: application/json
+
+{
+  "userName": "admin22",
+  "password": "123456"
+}
+
+###
+
+### Logout
+POST {{base_url}}/v1/auth/logout
+Content-Type: application/json
+
+{
+  "userId": 21
+}
+
+###
+
+### Refresh token
+GET {{base_url}}/v1/auth/refreshtoken
+Content-Type: application/x-www-form-urlencoded
+
+refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTczNDk3ODY5NSwiZXhwIjoxNzM1NTgzNDk1fQ.PTQNIGwSJLmdOhZIFPqtTganX50WsF02WjYmMVlvoh0
+
+
+###
+
+### Update data
+PUT {{base_url}}/info?id=1
+Content-Type: application/json
+
+{
+  "name": "Add your name in the body"
+}
+
+###
+
+### Delete data
+DELETE {{base_url}}/info?id=1
+
+###

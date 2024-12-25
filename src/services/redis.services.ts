@@ -1,7 +1,40 @@
 import { redisClient } from "database/redis.init";
+import { UserService } from "modules/Users/user.services";
+
+export const checkKeyService = async (key: string): Promise<boolean> => {
+  try {
+    // Check key
+    const exists = await redisClient.exists(key);
+    if (exists === 0) {
+      return false
+    }
+    return true
+
+    // // Lấy TTL của khóa (thời gian hết hạn)
+    // const ttl = await redisClient.ttl(key);
+    // let expirationStatus = "";
+    // if (ttl === -1) {
+    //   expirationStatus = "Key does not have an expiration time.";
+    // } else if (ttl > 0) {
+    //   expirationStatus = `Key will expire in ${ttl} seconds.`;
+    // }
+
+    // // Lấy giá trị của khóa
+    // const value = await redisClient.get(key);
+    // return {
+    //   key,
+    //   exists: true,
+    //   value,
+    //   expirationStatus,
+    // };
+  } catch (err) {
+    console.error(`Error checking key: ${key} in Redis:`, err);
+    throw err;
+  }
+};
 
 export const saveTokensToRedis = async (
-  userId: string,
+  key: string,
   accessToken: string,
   refreshToken: string
 ) => {
@@ -11,9 +44,18 @@ export const saveTokensToRedis = async (
   const timeRefresh = parseInt(
     process.env.REFRESH_TOKEN_EXPIRE_TIME_REDIS || "300"
   );
-  await redisClient.setEx(`accessToken:${userId}`, timeAccess, accessToken);
-  await redisClient.setEx(`refreshToken:${userId}`, timeRefresh, refreshToken);
-  console.log(`REDISCLIENT:: Tokens of userId:${userId} saved to Redis`);
+
+  await redisClient.setEx(
+    `accessToken:${key}`,
+    timeAccess,
+    accessToken
+  );
+  await redisClient.setEx(
+    `refreshToken:${key}`,
+    timeRefresh,
+    refreshToken
+  );
+  console.log(`REDISCLIENT:: Tokens of userId:${key} saved to Redis`);
 };
 
 export const getAccessToken = async (userId: string) => {
@@ -32,7 +74,7 @@ export const getAccessToken = async (userId: string) => {
   }
 };
 
-export const getRefreshToken = async (userId: string) => {
+export const checkKeyRefreshToken = async (userId: string) => {
   try {
     const refreshToken = await redisClient.get(`refreshToken:${userId}`);
     if (refreshToken) {
@@ -42,7 +84,7 @@ export const getRefreshToken = async (userId: string) => {
       return false;
     }
   } catch (err) {
-    console.error("Error getting refreshToken:", err);
+    console.error("Error getting key refreshToken:", err);
     return null;
   }
 };
@@ -108,11 +150,11 @@ export const checkKeyExpiration = async (key: string) => {
   try {
     const ttl = await redisClient.ttl(key);
     if (ttl === -1) {
-      console.log(`Key: ${key} does not have an expiration time.`);
+      return `Key: ${key} does not have an expiration time.`;
     } else if (ttl === -2) {
-      console.log(`Key: ${key} does not exist.`);
+    return `Key: ${key} does not exist.`;
     } else {
-      console.log(`Key: ${key} will expire in ${ttl} seconds.`);
+    return `Key: ${key} will expire in ${ttl} seconds.`;
     }
   } catch (err) {
     console.error("Error checking key expiration in Redis:", err);

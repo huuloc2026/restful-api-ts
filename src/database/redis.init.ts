@@ -1,5 +1,6 @@
 import { createClient } from "redis";
 import dotenv from "dotenv";
+import { UserService } from "modules/Users/user.services";
 
 dotenv.config();
 
@@ -59,13 +60,15 @@ const clearAllData = async () => {
   }
 };
 
+
 process.on("SIGINT", async () => {
   console.log("Closing Redis connection...");
   if (redisClient.isOpen) {
-    await clearAllData();
+    // await clearAllData();
     await redisClient.disconnect();
     console.log("Redis connection closed.");
   }
+  
   process.exit(0);
 });
 
